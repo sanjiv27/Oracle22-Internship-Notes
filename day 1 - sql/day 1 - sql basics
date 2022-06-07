@@ -1,0 +1,379 @@
+Pl -> sql, dotnet, react, python, java, c++, angular, html
+
+
+dotnet -> framework
+reat -> lib
+angular -> framework
+python -> pl(java, c++) + sl
+
+
+dmc -> control str,
+
+
+
+PL(loops, control str, exception handling, cursor, procedures, functions) + Sql 
+
+
+Data -> files, mp3, excel sheets, binary -> (Records)
+DB -> Storage
+DBMS (rules -> store, kind)-> firebase, mongoDB, postgress, oracle, msSQL server, Mysql, sqlite
+
+
+DBMS -> 2 types -> 1. rdbms(SQl)   2. Nosql(JSON, BSON -> mongoDB (Dictionary , Key : value))
+                      TABLE                 TREE, MAP
+
+Mysql, Oracle    --> Sql 
+
+
+
+sql differently
+
+
+
+DBMS(ORACLE) -> 
+    USERS (HR)
+           -> TABLES
+			   -> DATA
+
+
+DBMS(MYSQL) -> 
+   DATABASE ->
+         -> TABLES
+		      -> DATA
+
+
+
+
+
+
+
+
+SQL -> ddl, dml, dql, tcl
+
+
+
+TRANSACTION -> 
+
+pl -> state exec
+
+
+print("Hello World")
+
+
+sql -> fired query
+
+
+1 transaction ->
+select * from job;
+
+
+SELECT ---
+
+select * from employees;
+select last_name from employees;
+dec employees;
+
+
+
+CREATE  ----
+
+create table oracle_cand(rollno number, name varchar2(10));
+
+MANAV -> 5
+ABHINAV -> 7 
+
+ORACLE -> NUMBER   (INTEGER -> NUMBER)
+MYSQL -> INTEGER
+
+
+ORACLE -> VARCHAR2,   VARCHAR(RESERVED KEYWORD)
+MYSQL  -> CHAR(FIXED), VARCHAR (variable length)
+
+
+
+
+INSERT -----
+
+insert into oracle_cand values(11, 'ABHINAV');
+insert into oracle_cand(rollno, name) values(12, 'AMAR');
+insert into oracle_cand values('ANCHAL', 13);   -> ERROR
+insert into oracle_cand(name, rollno) values('ANCHAL', 13);
+insert into oracle_cand values(12); -> ERROR
+insert into oracle_cand(rollno) values(14);
+
+
+
+UPDATE -----
+
+update oracle_cand set rollno = 21 where name = 'ANJALI';
+update oracle_cand set rollno = 21;
+
+
+
+DELETE -----
+
+
+delete from oracle_cand where name = 'Amar'; -> case sesitive
+delete from oracle_cand where name = 'AMAR';
+delete from oracle_cand;
+
+
+
+
+SELECT ----
+
+select last_name, salary,  salary + 250 from employees;
+select last_name, salary, salary + 2 * 5 from employees;
+select last_name, salary, (salary + 2) * 5 from employees;
+ 
+
+NULL ---- 
+select last_name, COMMISSION_PCT from employees;
+(Null => 0, takes memory, no arith. with null values)
+
+select last_name, COMMISSION_PCT + 2 from employees;
+
+
+ALIASES ---
+select last_name, COMMISSION_PCT + 2*5 as new_com from employees;
+select last_name, COMMISSION_PCT + 2*5 as "New_Com" from employees;
+select last_name, COMMISSION_PCT + 2*5 "New_Com" from employees;
+ 
+
+
+CONCATE ---
+
+select first_name || last_name from employees;
+select first_name || ' ' || last_name from employees;
+select first_name || ' ' || last_name as "FullName" from employees;
+
+
+
+AVOID DUPLICATION ----
+
+select distinct last_name from employees;
+
+
+
+WHERE (ROW LIMITATION)-----
+
+select last_name, DEPARTMENT_ID from employees where DEPARTMENT_ID <= 90;
+select last_name, DEPARTMENT_ID from employees where DEPARTMENT_ID between 10 and 40;
+select last_name, DEPARTMENT_ID from employees where DEPARTMENT_ID in (10, 30, 76, 91);
+
+
+
+
+
+PATTERN MATCHING ----
+select last_name from employees where last_name like 'H%';
+select last_name from employees where last_name like 'H___';
+select last_name from employees where last_name like '_o%';
+
+
+IS NULL ------
+
+select last_name, manager_id from employees where manager_id is null;
+
+
+
+LOGICAL -----
+AND -> select last_name from employees where last_name like 'H%' and manager_id is null;
+OR  -> select last_name from employees where last_name like 'H%' or manager_id is null;
+NOT -> select last_name from employees where manager_id is not null;
+       select last_name, salary from employees where not salary >=10000;
+       select last_name from employees where last_name not like 'H%'
+
+
+
+
+SORTING ----
+
+ORDER BY-
+
+1. select last_name from employees order by last_name
+2. select last_name from employees order by last_name desc
+3. select last_name, hire_date from employees order by hire_date
+4. select last_name, hire_date from employees order by last_name, hire_date
+5. select last_name, hire_date from employees order by 2;
+
+Question. select last_name, hire_date from employees order by last_name, hire_date desc
+
+
+
+
+----------------SINGLE ROW FUNCTIONS-------------
+
+
+CASE CONVESRION --
+lower, upper, initcap
+
+select initcap('batch_oracle') from dual;
+select upper(first_name) from employees;
+
+
+
+
+CHAR MANIPULATION FUNCTIONS-- 
+
+concat() ->  select concat('Hello', 'Oracle') from dual;
+length() ->  select concat('Hello') from dual;
+replace() -> select replace('HelloOracle', 'Hello', 'Hola') from dual;
+
+
+NUMBER FUNCTIONS--
+
+round() -> select round(45.12) from dual;
+           select round(45.12) from dual;
+		   
+		   select round(44.12, -1) from dual;
+		   select round(46.12, -1) from dual;
+		   select round(46.12, -2) from dual;
+         
+trunc() -> select round(45.12) from dual;
+
+mod()   -> select mod(10, 2) from dual;
+
+
+
+
+
+DATE FUNCTIONS-
+
+1. select sysdate from dual;
+2. select hire_date + 2 from employees;    date + - number => date
+3. select sysdate - hire_date from employees; date - date => days (numbers)
+
+NOTE - > date + date not allowed
+
+select (sysdate - hire_date) / 365 from employees;
+
+
+
+
+
+TYPE CONVERSION FUNCTIONS-
+
+date -> char
+
+to_char(date, 'format')
+
+
+select to_char(hire_date, 'fmDD month yyyy') from employees;
+select to_char(hire_date, 'DD mm yy') from employees;
+select to_char(hire_date, 'DD mm year') from employees;
+select to_char(hire_date, 'DD month yy') from employees;
+
+
+
+char -> date
+select to_date('01-jan-22', 'dd mm yyyy') from dual;
+
+
+number -> char
+select last_name, to_char(salary, '99999')from employees;
+select last_name, to_char(salary, '$99999')from employees;
+select last_name, to_char(salary, '099999')from employees;
+
+
+
+
+NESTED FUNCTIONS---
+
+select length(concat('Hello' , 'Oracle')) from dual;
+
+
+
+GENERAL FUNCTIONS --
+
+select nvl(COMMISSION_PCT, 0) from employees;
+select last_name, salary, COMMISSION_PCT, nvl2(COMMISSION_PCT, 1, 10) from employees;
+select last_name, salary, COMMISSION_PCT, nvl2(COMMISSION_PCT, 'nA', 'nP') from employees;
+
+select salary, nvl2(salary,'nA', 'nP') from employees;
+
+
+
+
+---------------EXPRESSION MULTI CONDITIONS------------------
+
+SELECT last_name, salary,
+CASE last_name WHEN 'King' THEN salary - 100
+               WHEN 'Fay' THEN salary + 100
+ELSE salary END as "new_sal"
+FROM employees;			   
+ 
+
+
+---------------DECODE FUNCTION---------------
+
+SELECT last_name, salary,
+DECODE(last_name,'King',salary - 100,
+                 'Fay' ,salary + 100,
+salary) new_sal
+FROM employees;
+
+
+
+---------------MULTI ROW FUNCTIONS---------------
+
+select max(salary), min(salary), sum(salary), avg(salary), count(last_name) from employees;
+select count(*) from employees where salary > 10000;
+select count(distinct salary) from employees;
+
+
+
+
+GROUP BY---
+
+select avg(salary) from employees group by department_id;
+select department_id, avg(salary) from employees group by department_id;
+select department_id, manager_id, avg(salary) from employees group by department_id, manager_id;
+select department_id, avg(salary) from employees group by department_id, manager_id;
+
+
+-----HAVING ---
+select department_id, avg(salary) from employees group by department_id having department_id > 50;
+
+
+select last_name, job_id, avg(salary) from employees
+where job_id like 'S%' 
+group by job_id, last_name having last_name like 'J%';
+
+
+select sum(location_id) as loc from locations
+having min(location_id) < max (location_id);
+
+
+
+
+
+ALTER(add, drop, update) 
+     
+1. alter table oracle_cand modify name varchar(20);
+2. alter table oracle_cand add contact_no varchar(10);
+3. alter table oracle_cand drop contact_no;
+4. alter table oracle_cand rename column name to new_name;
+
+
+
+Truncate -> Delete all data              -> NO ROLLACK
+Drop -> Delete all Data + table Strcut.  -> NO ROLLACK
+Delete -> specific row but logicaly we need to provide WHERE CLAUSE  ->  ROLLACK WORKS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

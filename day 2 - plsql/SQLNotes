@@ -1,0 +1,727 @@
+Microsoft Windows [Version 10.0.10240]
+(c) 2015 Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>sqlplus
+
+SQL*Plus: Release 11.2.0.2.0 Production on Sat Oct 23 09:12:00 2021
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: hr
+Enter password:
+
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> select * from mytable;
+
+no rows selected
+
+SQL> select * from jspmstud;
+
+    ROLLNO NAME                      MOBNO
+---------- -------------------- ----------
+        11 Viashnavi                 12345
+        12 samarth                   67890
+        22 Ninad                      1122
+        12 samarth
+        33 sushant
+        44 shubham
+
+6 rows selected.
+
+SQL> update jspmstud set mobno = 99999;
+
+6 rows updated.
+
+SQL> select * from jspmstud;
+
+    ROLLNO NAME                      MOBNO
+---------- -------------------- ----------
+        11 Viashnavi                 99999
+        12 samarth                   99999
+        22 Ninad                     99999
+        12 samarth                   99999
+        33 sushant                   99999
+        44 shubham                   99999
+
+6 rows selected.
+
+SQL> delete from jspmstud ;
+
+6 rows deleted.
+
+SQL> select * from jspmstud;
+
+no rows selected
+
+SQL> insert into jspmstud values(11, 'vinit', 12345);
+
+1 row created.
+
+SQL> select * from jspmstud;
+
+    ROLLNO NAME                      MOBNO
+---------- -------------------- ----------
+        11 vinit                     12345
+
+SQL> insert into jspmstud values(12, 'poonam', 67890);
+
+1 row created.
+
+SQL> select * from jspmstud;
+
+    ROLLNO NAME                      MOBNO
+---------- -------------------- ----------
+        11 vinit                     12345
+        12 poonam                    67890
+
+SQL> truncate table jspmstud;
+
+Table truncated.
+
+SQL> select * from jspmstud;
+
+no rows selected
+
+SQL> desc jspmstud;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNO                                             NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ MOBNO                                              NUMBER(38)
+
+
+SQL> drop table jspmstud;
+
+Table dropped.
+
+SQL> desc mytable;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(10)
+ BSDATE                                             DATE
+
+SQL> insert into mytable values('aarshin', '01-JAN-22');
+
+1 row created.
+
+SQL> insert into mytable values('sushant', '02-JAN-22');
+
+1 row created.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+sushant    02-JAN-22
+
+
+SQL> update mytable set name = 'sakshi' where name = 'sushant';
+
+1 row updated.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> update mytable set name = 'ashish' where name = 'sakshi';
+
+1 row updated.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+ashish     02-JAN-22
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> commit;
+
+Commit complete.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+aarshin    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> update mytable set name = 'aarshin' where name = 'shubham';
+
+0 rows updated.
+
+SQL> update mytable set name = 'shubham' where name = 'aarashin';
+
+0 rows updated.
+
+SQL> update mytable set name = 'shubham' where name = 'aarshin';
+
+1 row updated.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+shubham    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from mytable;
+
+NAME       BSDATE
+---------- ---------
+shubham    01-JAN-22
+sakshi     02-JAN-22
+
+SQL> select * from mytable;
+
+
+
+
+CASE 1--------------------
+begin
+transact
+rollback      NO COOMIT
+
+
+CASE2---------
+begin
+transact
+commit
+rollback
+
+
+ACID   --->
+
+ATOMICITY      ---> abort , commit
+CONSISTENCY    ---> 
+ISOLATION      --->
+DURABILITY     ---> 
+
+
+ATM OF JOEL                    ATM OF KAVITA
+
+
+ATOMICITY
+---------------------------------------------------------------------
+JOEL  700                     KAVITA   400
+start transaction
+
+tr1                              tr2
+read(x)                       read(y)
+x = 700 - 200                 y = 400 +  200
+write(x) => 500               write(y)  => 600
+-----------------------------------------------------------------------
+
+
+CONSISTENCY
+-----------------------------------------------------------------
+JOEL  700         +            KAVITA   400       ==>   1100
+-----------------------------------------------------------------
+
+ISOLATION
+--------------------------------------------------------------
+write(x) => 500     +          write(y)  => 600   ==> 1100
+--------------------------------------------------------------
+
+
+DURABILITY
+-------------------------------------------------------------
+write(x) => 500               write(y)  => 600
+-------------------------------------------------------------
+
+
+
+schema    ---> struct of db
+
+
+admission --> courses --> exams --> passout
+
+
+student, teacher, admin, course 
+
+
+flow of data ----------------------->
+
+1. student
+2. admin
+3. course(Learn)
+4. teacher (classes)
+5. exams
+6. Passout
+
+
+
+entity --> object / real time role
+attributes --> information
+
+
+entity / table_name --> student , teacher
+attributes / col_Names -->  student_id, student_name,  teacher_id, teacher_name
+
+
+
+Relationships
+
+1 -> 1    (student -  course)
+1 -> M    (student - teacher) (course - student)
+M -> M    (student - teacher)
+M -> 1    (student - exams)
+
+
+
+
+
+
+
+
+
+
+
+ALTER   
+
+    ---> ADD COL
+	---> DROP COL
+	---> MOD DT
+
+
+
+
+
+
+
+SELECT
+
+ALL ---> *
+no duplication ----> distinct
+alias --> as 
+
+
+--------------------------------------------------------------
+select * from departments; 
+select department_id, location_id from departments;	
+-------------------------------------------------------------
+
+-------------------------------------------------------------
+select distinct location_id from departments;
+-------------------------------------------------------------
+
+-------------------------------------------------------------
+select distinct location_id as mylocation from departments;
+select distinct location_id as "MyLocation" from departments;
+select distinct location_id MyLoca from departments;
+-------------------------------------------------------------
+
+
+
+
+
+SELECT with OPERATORS
+
+-----------------------------------------------------
+select department_id + 100, location_id from departments;
+select 1+ department_id * 2  from departments;
+select 1+ department_id * 2  from departments;
+-------------------------------------------------------
+
+
+
+
+
+NULL
+
+-----------------------------------------------------
+Null ---> NO blank space, its a value
+
+select 4 * commission_pct + 100 from employees;
+
+-------------------------------------------------------
+
+
+CONCATENATION
+
+---------------------------------------------------------- 		
+select last_name || ' ' ||  job_id as "details" from employees;
+select last_name || ' has job id ' ||  job_id as "details" from employees;
+--------------------------------------------------------------
+
+
+
+
+WHERE
+---------------------------------------------------------------
+select salary from employees where salary > 10000;
+ select last_name, first_name from employees where salary <= 10000;
+----------------------------------------------------------------
+
+
+
+
+BETWEEN with and
+-----------------------------------------------------------------
+select last_name, salary from employees where salary BETWEEN 10000 and 12000;
+
+-----------------------------------------------------------------
+
+
+IN (Membership OPERATOR)
+-----------------------------------------------------------------
+select last_name, salary from employees where salary IN (10000, 12000);
+
+-----------------------------------------------------------------
+
+
+LIKE (Pattren Matching)
+-----------------------------------------------------------------
+select last_name from employees where last_name LIKE '%r';
+
+select last_name from employees where last_name LIKE 'Oze_';
+
+select last_name from employees where last_name LIKE '%ke_';
+-----------------------------------------------------------------
+
+
+
+
+IS NULL, IS NOT NULL
+-----------------------------------------------------------------
+select last_name from employees where commission_pct is null;
+
+select last_name from employees where commission_pct is not null;
+-----------------------------------------------------------------
+
+
+
+AND, OR , NOT
+-----------------------------------------------------------------
+select last_name, salary from employees where salary = 10000 AND job_id LIKE 'S%';
+
+select last_name, salary, job_id from employees where salary = 10000 OR job_id LIKE 'S%';
+
+select last_name, salary from employees where salary NOT IN (1000);
+-----------------------------------------------------------------
+
+
+
+
+PRECEDENCE [AND, OR] 
+-----------------------------------------------------------------
+select last_name, job_id, salary from employees where job_id = 'ST_MAN' OR job_id = 'ST_CLERK' AND salary = '10000';
+
+select last_name, job_id, salary from employees where (job_id = 'ST_MAN' OR job_id = 'ST_CLERK') AND salary < 10000;
+-----------------------------------------------------------------
+
+
+
+
+SORTING [ORDER BY  ---> default ASC, DESC]
+-----------------------------------------------------------------
+select last_name, salary from employees ORDER BY last_name;
+
+select last_name, salary from employees ORDER BY last_name DESC;
+
+select last_name, salary from employees ORDER BY 2;
+
+ select last_name, salary from employees ORDER BY last_name, salary;
+-----------------------------------------------------------------
+
+
+
+
+FUNCTIONS [SINGLE, MULTI] 
+-----------------------------------------------------------------
+1. CASE - CONVERSION FUNCTIONS
+
+select lower(last_name), upper(first_name), department_id, employee_id from employees where last_name = 'King';
+
+select initcap(job_id) from employees;
+
+2. CHAR MANIPULATION FUNCTIONS
+
+select employee_id,  CONCAT(first_name, last_name) from employees;
+select length('oracle') from dual;
+select substr('oracle', 1, 3) from dual;
+select instr('orracle', 'r') from dual;
+
+
+3. NUMBER FUNCTIONS
+
+select ROUND(49.5123) from dual;
+select ROUND(49.5123, 1) from dual;
+select ROUND(49.5123, -1) from dual;
+select ROUND(44.5123, -1) from dual;
+select ROUND(45.5123, -1) from dual;   // 50
+
+
+select TRUNC(49.5123) from dual;
+
+
+select MOD(10, 3) from dual;
+
+
+
+4. DATE FUNCTION
+
+select SYSDATE from dual;
+
+select hire_date + 3 from employees;
+
+select (SYSDATE - hire_date) / 365 as years from employees;
+
+select NEXT_DAY('24-oct-2021', 'SUNDAY') from dual;
+
+
+5. TYPE CONVERSION FUNCTIONS
+
+
+select last_name, TO_CHAR(hire_date, 'fmDD MONTH YYYY') as chardate from employees;
+select last_name, TO_CHAR(hire_date, 'fmDD MONTH YEAR') as chardate from employees;
+select last_name, TO_CHAR(hire_date, 'fmDD MM YYYY') as chardate from employees;
+select last_name, TO_CHAR(hire_date, 'DD MONTH YEAR') as chardate from employees;
+
+
+select last_name, TO_CHAR(salary, '99999')  from employees;
+select last_name, TO_CHAR(salary, '$99999')  from employees;
+select last_name, TO_CHAR(salary, '099999')  from employees;
+
+
+select TO_DATE('01-jan-2022', 'DD MM YYYY') from dual;
+
+
+
+
+6. NESTED FUNCTIONS
+
+select length(concat('joel','silas')) from dual;
+SELECT CONCAT(LOWER(LAST_NAME),FIRST_NAME) FROM EMPLOYEES;
+select round((sysdate - hiredate)/365) as year from employees;
+select substr(concat('pratik','diwanji'),1,3) from dual;
+
+
+
+7. GENERAL FUNCTIONS
+
+select NVL(commission_pct, 0) from employees;
+select last_name, salary, commission_pct, NVL2(commission_pct, 'REPLACEVALUE', 'REPLACENULL') from employees;
+select last_name, salary, NULLIF(LENGTH(first_name), LENGTH(last_name)) as nullif from employees;
+
+
+
+8.
+
+EXPRESSION --->
+
+SELECT last_name, salary, job_id,
+CASE last_name WHEN 'Fay'   THEN salary * 2
+               WHEN 'Smith' THEN salary - salary
+ELSE salary END as newsalary
+FROM employees;
+
+
+FUNCTION --->
+
+SELECT last_name, salary, job_id,
+DECODE(last_name, 'Fay' , salary * 2,
+                  'Smith', salary - salary,
+      salary) newsalary
+FROM employees;
+
+
+
+---------------MULTI FUNCTIONS-----------------
+
+
+select MAX(salary), MIN(salary), AVG(salary), SUM(salary), COUNT(salary) from employees;
+
+select COUNT(*) from employees;
+
+select COUNT(*) from employees where salary = 10000;
+
+select COUNT(DISTINCT salary) from employees;
+
+
+-----------GROUP BY------------------------- 
+
+select AVG(salary) from employees GROUP BY department_id;
+
+select last_name, AVG(salary) from employees GROUP BY last_name;
+
+select AVG(salary) from employees GROUP BY last_name, department_id;
+
+select last_name, first_name, AVG(salary) from employees GROUP BY last_name, first_name;
+
+
+-----------HAVING------------------------- 
+
+select last_name, AVG(salary) from employees GROUP BY last_name HAVING last_name LIKE 'J%';
+
+select SUM(salary) from employees where job_id LIKE 'S%' GROUP BY first_name HAVING AVG(salary) > 1000;
+
+select AVG(salary) from employees where job_id LIKE 'S%' GROUP BY first_name HAVING AVG(salary) > 1000 ORDER BY AVG(salary);
+
+
+<-------use GROUP BY-------->
+select MAX(AVG(salary)) from employees GROUP BY salary;
+---------------------------------------------------------------------------------------------------------------
+
+
+
+
+<---------------------------JOINS-------------------------->
+
+1. NATURAL JOIN
+
+                TAB1 , CLNAME---> SAME COL NAME , SAME DATA TYPE
+				TAB2 , CLNAME--->
+				
+				DUPLICATION(DATA) AVOID with NATURAL JOIN
+				TOTAL COL FROM BOTH TABLES
+
+
+select city, location_id, manager_id
+from departments
+NATURAL JOIN  locations;
+
+
+
+TAB1                 TAB2
+
+marks(number)     marks(number)
+10                  5
+20                 20
+30                 18
+40                 40
+
+
+
+<--------------------- USING----------------------------> 
+
+select location_id, country_id, department_name from departments 
+JOIN locations 
+USING (location_id);
+
+select name, rollno, marks from tabone NATURAL JOIN tabtwo;
+
+
+
+<--------------------- ON---------------------------->
+
+select emp.employee_id, emp.department_id, dept.department_name
+from employees emp
+JOIN departments dept
+ON (emp.department_id = dept.department_id);
+
+
+select emp.employee_id, emp.department_id, dept.department_name
+from employees emp
+JOIN departments dept
+ON (emp.department_id = dept.department_id)
+AND emp.last_name = 'Taylor';
+
+
+
+
+----------------------------------
+2. SELF JOIN
+
+
+select worker.last_name wname, manager.last_name mname
+from employees worker JOIN employees manager
+ON (worker.manager_id  =  manager.employee_id);
+
+
+----------------------------------
+
+3. OUTER JOIN 
+------------------------------------------------------------------------
+
+UNMATCHED ROWS --> OUTER JOIN
+MATCHED ROWS   --> INNER JOIN
+
+ select e.last_name, e.department_id, e.first_name, d.department_name
+ from employees e LEFT OUTER JOIN departments d
+ ON (e.department_id = d.department_id);
+
+  
+ select  e.department_id did, e.first_name fname, d.department_name dname
+ from employees e LEFT OUTER JOIN departments d
+ ON (e.department_id = d.department_id);
+ 
+ 
+ 
+ select  e.department_id did, e.first_name fname, d.department_name dname
+ from employees e RIGHT OUTER JOIN departments d
+ ON (e.department_id = d.department_id);
+
+
+
+ select  e.department_id did, e.first_name fname, d.department_name dname
+ from employees e FULL OUTER JOIN departments d
+ ON (e.department_id = d.department_id);
+
+------------------------------------------------------------------------------------
+
+
+4. CROSS JOIN CARTSIAN Product
+
+select last_name, department_name
+from employees
+CROSS JOIN departments;
+
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

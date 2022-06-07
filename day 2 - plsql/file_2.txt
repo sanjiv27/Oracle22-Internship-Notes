@@ -1,0 +1,251 @@
+summury
+--------------
+Pl/sql
+what is plsql
+declaration
+simple block
+select statement in plsql
+if statements
+loops
+procedure
+functions
+
+
+cursor
+exception
+trigers
+packages
+arrays
+
+select statement in plsql, we had taken only 1 row at a time
+
+select id,name into eid,ename from emp where id=101;
+
+select * from emp; -- 10 rows
+area where this data is stored in ram is called as context area
+
+implicit 
+explicit/user defined cursor --- 
+
+we use user defined cursor to print the n no of rows in plsql
+1)cursor with select
+2)open cursor
+3)fetch the data --- loop
+4)close cursor
+
+
+create table customers(id number(4),name varchar(20),age number(3),address varchar(20),salary number(9,2));
+
+
+
+-----------------------------CURSOR-----------------------------------------------------------------
+
+DECLARE 
+c_id customers.id%type; 
+c_name customers.name%type; 
+c_addr customers.address%type;
+
+CURSOR c_customers is SELECT id, name, address FROM customers; 
+BEGIN 
+	dbms_output.put_line('Opening the cursor');
+OPEN c_customers; 
+	LOOP 
+FETCH c_customers into c_id, c_name, c_addr; 
+	EXIT WHEN c_customers%notfound;
+dbms_output.put_line(c_id || ' ' || c_name || ' ' || c_addr);  
+END LOOP; 
+CLOSE c_customers; 
+END; 
+/
+
+
+
+
+Declare 
+cust customers%rowtype; 
+Begin 
+Select * into cust from customers where id=50;
+DBMS_OUTPUT.PUT_LINE(cust.id); 
+DBMS_OUTPUT.PUT_LINE(cust.name); 
+DBMS_OUTPUT.PUT_LINE(cust.address); 
+DBMS_OUTPUT.PUT_LINE(cust.age);
+DBMS_OUTPUT.PUT_LINE(cust.salary); 
+End; 
+/
+
+
+
+-------------------------EXCEPTION---------------------------------------------------------------
+
+DECLARE 
+Sample_exception EXCEPTION; -- user defined exception
+PROCEDURE nested_block 
+IS 
+BEGIN 
+	Dbms_output.put_line('Inside nested block'); 
+	Dbms_output.put_line('calling sample_exception from nested block'); RAISE sample_exception; 
+EXCEPTION 
+WHEN sample_exception THEN 
+	Dbms_output.put_line ('Exception captured in nested block. Calling to main block'); 
+RAISE; 
+END; --- procedure ended
+BEGIN 
+	Dbms_output.put_line('Inside main block'); 
+	Dbms_output.put_line('Calling nested block'); 
+Nested_block; 
+EXCEPTION 
+WHEN sample_exception THEN 
+	Dbms_output.put_line ('Exception captured in main block'); 
+END; 
+/
+
+
+Declare 
+cust customers%rowtype; 
+Begin 
+Select * into cust from customers where id=50;
+	DBMS_OUTPUT.PUT_LINE(cust.id); 
+	DBMS_OUTPUT.PUT_LINE(cust.name); 
+	DBMS_OUTPUT.PUT_LINE(cust.address); 
+	DBMS_OUTPUT.PUT_LINE(cust.age);
+	DBMS_OUTPUT.PUT_LINE(cust.salary);
+EXCEPTION 
+WHEN no_data_found THEN 
+	dbms_output.put_line('Invalid ID!'); 
+WHEN others THEN 
+	dbms_output.put_line('Error!'); 
+End; 
+/
+
+
+
+--------------------TRIGGER------------------------------------------------------
+
+CREATE OR REPLACE TRIGGER trig1 
+BEFORE DELETE OR INSERT OR UPDATE ON customers 
+FOR EACH ROW   
+BEGIN 
+dbms_output.put_line('Trigger executed successfully....');
+END; 
+/
+
+SQL> update customers set age=30 where age=29;
+Trigger executed successfully....
+
+1 row updated.
+
+
+
+
+
+CREATE PACKAGE cust_sal 
+AS 
+PROCEDURE find_sal(c_id customers.id%type); 
+END cust_sal; 
+/
+
+
+
+CREATE OR REPLACE PACKAGE BODY cust_sal 
+AS 
+PROCEDURE find_sal(c_id customers.id%TYPE) 
+IS 
+c_sal customers.salary%TYPE; 
+BEGIN 
+SELECT salary INTO c_sal FROM customers WHERE id = c_id; dbms_output.put_line('Salary: '|| c_sal); 
+END find_sal; 
+END cust_sal;
+/
+
+
+
+DECLARE 
+code customers.id%type := 10; 
+BEGIN 
+cust_sal.find_sal(code); 
+END; 
+/
+
+
+
+int arr[] = {1,2,3,4,5};
+int -- type of data
+arr -- variable name
+index/subscript --0,1,2,3,4
+
+
+
+
+declare
+create type marks_array is table of number index by number;
+arr marks_array;
+
+DECLARE
+TYPE salary IS TABLE OF NUMBER INDEX BY VARCHAR2(20);
+salary_list salary;
+name VARCHAR2(20);
+BEGIN
+--adding elements to the table
+salary_list('Rajnish ') := 62000;
+salary_list('Minakshi ') := 75000;
+salary_list('Martin') := 100000;
+salary_list('James') := 78000;
+--printing the table
+name := salary_list.FIRST ;
+WHILE name IS NOT null LOOP
+dbms_output.put_line('Salary of ' || name || ' is ' || TO_CHAR(
+salary_list (name)));
+name :=salary_list.NEXT (name);
+END LOOP;
+END;
+/
+
+
+
+DECLARE
+CURSOR c_customers is select name from customers;
+TYPE c_list IS TABLE of customers.name%type INDEX BY binary_integer;
+name_list c_list ;
+counter integer :=0;
+BEGIN
+FOR n IN c_customers LOOP
+counter := counter +1;
+name_list(counter) := n.name;
+dbms_output.put_line ('Customer('||counter|| name_list (counter));
+END LOOP;
+END;
+/
+
+
+
+
+
+DECLARE
+TYPE names_table IS VARRAY(20) OF VARCHAR2(10);
+TYPE grades IS TABLE OF INTEGER;
+names names_table ;
+marks grades;
+total integer;
+BEGIN
+names := names_table ('Kavita ', 'Pritam ', 'Ayan ', 'Rishav ', 'Aziz');
+marks:= grades(98, 97, 78, 87, 92);
+total := names.count ;
+dbms_output.put_line ('Total '|| total || ' Students');
+FOR i IN 1 .. total LOOP
+dbms_output.put_line('Student:'||names(i)||', Marks:'||marks(i));
+end loop;
+END;
+/
+
+
+
+
+
+
+
+
+
+
+
+
+

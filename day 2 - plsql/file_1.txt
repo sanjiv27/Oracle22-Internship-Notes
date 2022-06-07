@@ -1,0 +1,229 @@
+summury
+----------------
+views
+sequence
+index
+synonym
+
+acid
+transaction- savepoint
+grant / revoke
+
+
+
+pl/sql
+---------
+procedural extention to sql
+
+main() ---procedure oriented language
+{
+  int a = 101;
+  String s = 'Manav'; 
+  printf();
+
+}
+
+
+---------------------HELLO WORLD-----------------
+
+begin
+dbms_output.put_line('hello world');
+end;
+------------------------------------------------
+
+
+
+---------------------Declaration Section------------
+declare
+num number(10);
+begin
+num:= 7;
+dbms_output.put_line(num);
+end;
+------------------------------------------------
+
+
+---------------------SELECT---------------------------
+select id,name from emp where id=101;
+101,Manav
+
+
+-- how to use select statement in pl/sql
+declare
+eid number(4);
+ename varchar2(20);
+begin
+select id,name into eid,ename from emp where id=101;
+dbms_output.put_line('The ID is : '||eid);
+dbms_output.put_line('The Name is: '||ename);
+end;
+/
+
+--------------------------------------------------------
+-- Write 5 programs to demons use of select statement in plsql 
+
+----------------------------IF---------------------------------
+declare
+eid number(4);
+ename varchar2(20);
+esal number(9,2);
+begin
+select id,name,sal into eid,ename,esal from emp where id=101;
+if (esal > 21000) then
+dbms_output.put_line('The ID is : '||eid);
+dbms_output.put_line('The Name is: '||ename);
+dbms_output.put_line('The Sal is: '||esal);
+end if;
+dbms_output.put_line('If statement completed');
+end;
+/
+-------------------------------------------------------------
+
+
+
+-- If - then-else statement example
+
+declare
+eid number(4);
+ename varchar2(20);
+esal number(9,2);
+begin
+select id,name,sal into eid,ename,esal from emp where id=101;
+if (esal > 21000) then
+dbms_output.put_line('The ID is : '||eid);
+dbms_output.put_line('The Name is: '||ename);
+dbms_output.put_line('The Sal is: '||esal);
+else
+dbms_output.put_line('The salary is less then 21000');
+dbms_output.put_line('If statement completed');
+end if;
+end;
+/
+=======================
+If-then-elsif-else
+
+declare
+eid number(4);
+ename varchar2(20);
+esal number(9,2);
+begin
+select id,name,sal into eid,ename,esal from emp where id=101;
+if (esal > 22000) then
+dbms_output.put_line('The ID is : '||eid);
+elsif (esal >21000) then
+dbms_output.put_line('The Name is: '||ename);
+elsif (esal >19000) then
+dbms_output.put_line('The Sal is: '||esal);
+else
+dbms_output.put_line('The salary is less then 21000');
+dbms_output.put_line('If statement completed');
+end if;
+end;
+/
+
+set serveroutput on
+
+------------------LOOP----------------------------------------
+DECLARE
+	i NUMBER := 1;
+BEGIN
+	dbms_output.put_line('Printing 1 to 10...');
+ LOOP
+	EXIT WHEN i>10;
+	DBMS_OUTPUT.PUT_LINE(i);
+	i := i+1;
+ END LOOP;
+dbms_output.put_line('The loop completed');
+END;
+/
+
+
+
+--While loop in Pl/sql
+DECLARE
+	i INTEGER := 1;
+BEGIN
+	dbms_output.put_line('Printing 1 to 10...');
+  WHILE i <= 10 LOOP
+	DBMS_OUTPUT.PUT_LINE(i);
+    i := i+1;
+END LOOP;
+dbms_output.put_line('The loop completed');
+END;
+/
+
+--
+BEGIN
+dbms_output.put_line('Printing 1 to 10... using for loop');
+	FOR k IN 1..10 LOOP
+	      DBMS_OUTPUT.PUT_LINE(k);
+    END LOOP;
+dbms_output.put_line('The loop completed');
+END;
+/
+
+================================
+void adder(int a, int b)
+{
+int c = a+b;
+printf(c);
+}
+adder(10,12); 
+-- call by reference
+-- call by value
+
+create or replace procedure adder(a in number,b in number)
+is
+c number(4);
+begin
+	c := a+b;
+	dbms_output.put_line(c);
+end;
+/
+
+execute adder(10,12);
+
+begin
+adder (10,12);
+end;
+ 
+
+----------------FUNCTIONS---------------------------------
+
+CREATE OR REPLACE FUNCTION totalemp 
+RETURN number 
+IS 
+	total number(3) := 0; 
+BEGIN 
+	SELECT count(*) into total FROM employees; 
+	RETURN total; 
+END; 
+/
+
+
+
+----------------CALLING FUNCTION FROM FUNCTION---------------------------------
+DECLARE 
+	c number(4); 
+BEGIN
+	dbms_output.put_line('Getting total no of employees');
+	c := totalemp(); 
+	dbms_output.put_line('Total no. of employees are : ' || c); 
+END; 
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
