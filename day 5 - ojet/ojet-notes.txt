@@ -1,0 +1,18 @@
+pre configured template can be created also called (Scafollding)
+we use ojet create for this
+web folder gets created after we build and serve the application.
+
+requirejs is used to createa an order to load any other scripts needed (its done async)
+
+
+https://docs.oracle.com/en/middleware/developer-tools/jet/12.1/develop/getting-started-oracle-javascript-extension-toolkit-jet.html
+variable whos value will change we will use {{ }}
+for variables that are read only or display only [[]]
+
+for databinding knockoutjs is used check https://knockoutjs.com 
+oj-module --> data binding
+oj-router --> for routing and spa
+
+
+for videos --> https://drive.google.com/drive/folders/1UQdtKiJdmOOgRyyRvBv9x-z2TjxnkJAW?usp=sharing
+
