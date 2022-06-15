@@ -14,6 +14,6 @@ oj-module --> data binding
 oj-router --> for routing and spa
 
 
-for videos --> https://drive.google.com/drive/folders/1UQdtKiJdmOOgRyyRvBv9x-z2TjxnkJAW?usp=sharing
+for videos --> https://youtube.com/playlist?list=PLfd4SAWgSiAkVLckUw2DJdHmhiDOS2DiF
 
 check common model and collection framework in ojet for working with rest endpoints (11th in documentation)

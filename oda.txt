@@ -1,0 +1,12 @@
+Oracle Digital Assistant Home page
+https://docs.oracle.com/en/cloud/paas/digital-assistant/index.html
+
+Tutorials
+https://docs.oracle.com/en/cloud/paas/digital-assistant/tutorials.html
+
+Technical Trainings
+https://otube.oracle.com/playlist/dedicated/1_8narnh7x/1_3as770rk
+
+https://docs.oracle.com/en/cloud/saas/human-resources/22a/farws/index.html
+
+for more resources from confluence check slack

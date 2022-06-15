@@ -1,0 +1,116 @@
+https://corej2eepatterns.com
+https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+https://spring.io/guides/gs/rest-service/
+https://www.h2database.com/html/cheatSheet.html
+
+
+springboot+rest+data - jpa
+- configure the db
+- entity == table
+- dao-crud-db
+- service buisness logic
+  interface method
+  implementation
+
+in application.properties we can give server.port=9999 to run in port 9999
+
+to connect with DB
+H2 --
+
+spring.datasource.url=jdbc:h2:~/test
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password= 
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+#enabling the H2 console  
+spring.h2.console.enabled=true
+
+ORACLE --
+
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url= jdbc:oracle:thin:@localhost:1521:XE
+spring.datasource.username=hr
+spring.datasource.password=hr
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+spring.jpa.show-sql=true
+
+Repository is something which can persist
+
+learn java.util.function
+
+check service oriented architecture and its difference from microservices
+adapters
+
+- eureka server (only writing properties) like jndi uddi => add eurek server, spring web and boot actuator
+- producer => actuator, eureka discovery client and spring web
+- consumer
+
+eureka server properties ---
+
+server.port=8761
+spring.application.name=discovery-server
+eureka.client.registerWithEureka=false
+eureka.client.fetchRegistry=false
+eureka.instance.hostname=localhost
+eureka.client.serviceUrl.defaultZone=http://${eureka.instance.hostname}:${server.port}/eureka/
+
+
+producer properties ---
+
+server.port=3001
+spring.application.name=producer-service
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+
+actuator gives health to show if others are connected to server
+
+consumer properties ---
+
+server.port=4001
+spring.application.name=consumer-service
+eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka
+
+in consumer add this in main
+@SpringBootApplication
+@EnableEurekaClient
+public class ConsumerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ConsumerApplication.class, args);
+	}
+	
+	
+	@Configuration
+    class RestTemplateConfig {
+            
+            @Bean
+              public RestTemplate restTemplate() {
+              return new RestTemplate();
+            }
+    }
+
+}
+
+create a controller package and add this controller
+@RestController
+@RequestMapping("/consumer")
+public class ConsumerController {
+	
+	@Autowired
+	RestTemplate resttemplate;
+
+	
+	@GetMapping("/show")
+	public String show() {
+		ResponseEntity<String> response =  resttemplate.getForEntity("Http://localhost:3001/producer/hello", String.class);
+		
+		return "Hello from consumer...getting data from producer..." +response.getBody();
+	}
+}
+
+Here two microservices are communicating with each other using the eureka server
+
+
+for videos - https://youtube.com/playlist?list=PLfd4SAWgSiAnsLw7n1ZQlSEfeRVzHr0rd
+trainer - amrita.m.saxena@gmail.com
+

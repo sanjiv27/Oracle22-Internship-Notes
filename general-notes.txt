@@ -1,0 +1,3 @@
+use sso to access these resources:
+- oreilly
+- linkedin learning
